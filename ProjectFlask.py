@@ -10,6 +10,13 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/rapporten')
+def rapporten():
+    return render_template('rapporten.html')
+
+@app.route('/instellingen')
+def instellingen():
+    return render_template('instellingen.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="../static/css/style.css">
+
+</head>
+<main>
+<body>
+    <nav>
+        {% block navigation %}
+            <div id="btn">
+                    <div id='top'></div>
+                    <div id='middle'></div>
+                    <div id='bottom'></div>
+            </div>
+            <div id="box">
+                    <div id="items">
+                            <div class="item"><a {% block home %} {% endblock %} href="{{ url_for('index') }}">Home</a></div>
+                            <div class="item"><a {% block rapporten %} {% endblock %} href="{{ url_for('rapporten') }}">Rapporten</a></div>
+                            <div class="item"><a {% block instellingen %} {% endblock %} href="{{ url_for('instellingen') }}">Instellingen</a></div>
+                    </div>
+            </div>
+        {% endblock %}
+    </nav>
+
+{% block body %}
+{% endblock %}
+    <script type="text/javascript" src="../static/js/script.js"></script>
+</body>
+</main>
+</html>
