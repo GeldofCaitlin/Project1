@@ -8,4 +8,30 @@
 
 {% block body %}
     <h1>Rapporten</h1>
+
+    <table border="1px">
+        <tr>
+            <th>ID</th>
+            <th>Datum</th>
+            <th>Tijd</th>
+            <th>Waarde meting</th>
+            <th>Soort meting</th>
+            <th>Bijsturen meting</th>
+        </tr>
+
+        {% for result in results %}
+            <tr>
+                {% for meting in result %}
+                    {% if meting == none %}
+                        <td></td>
+                    {% else %}
+                        <td>{{ meting }}</td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+
+        {% endfor %}
+    </table>
+
+
 {% endblock %}

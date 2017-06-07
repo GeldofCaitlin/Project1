@@ -1,0 +1,70 @@
+{% extends "layout-onboarding.html" %}
+{% block title %}
+    iGreenhouse
+{% endblock %}
+
+{% block onboarding %}
+{% endblock %}
+
+{% block body %}
+
+    <div id='dropdown'>
+        <ul>
+
+            <li class='detail'>Heb je reeds een account?<a href='#'><span>Log in ▼</span></a>
+                <ul>
+                    <form action="{{ url_for('index') }}" method="POST">
+                        <li><input type="email" name="emailLogin" placeholder="E-mailadres" required></input></li>
+                        <li><input type="password" name="passwordLogin" placeholder="Wachtwoord" required></input></li>
+                        <li><input type="submit" value="Inloggen"></input></li>
+                    </form>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="slider">
+        <img class="mySlides" src="../static/images/serre1.jpg" style="width:30%">
+        <img class="mySlides" src="../static/images/serre2.jpg" style="width:30%">
+        <img class="mySlides" src="../static/images/serre3.jpg" style="width:30%">
+    </div>
+
+
+    <form action="{{ url_for('onboarding1') }}" method="POST">
+        <div>
+            <input type="text" name="inputName" placeholder="Naam" required autofocus>
+        </div>
+        <div>
+            <input type="email" name="inputEmail" placeholder="E-mailadres" required>
+        </div>
+        <div>
+            <input type="password" name="inputPass" placeholder="Wachtwoord" required>
+        </div>
+        <div>
+            <input type="password" name="inputRepeatPass" placeholder="Herhaal wachtwoord" required>
+        </div>
+        <div>
+            <input type="submit" value="Registreer">
+        </div>
+    </form>
+
+    <script>
+        var myIndex = 0;
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) {
+                myIndex = 1
+            }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 5000); // Change image every 5 seconds
+        }
+    </script>
+
+{% endblock %}

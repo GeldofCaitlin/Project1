@@ -2,6 +2,26 @@
   box-sizing: border-box;
 }
 
+#logo{
+    margin: 0 auto;
+    display: block;
+}
+
+#afmelden a{
+    position: absolute;
+    top: 5%;
+    right: 2%;
+    color: #218b1f;
+    text-decoration: none;
+}
+
+#afmelden a:hover{
+    color: grey;
+}
+
+header{
+    border-bottom: 2px solid #cdcdcd;
+}
 
 #page-wrapper {
   position: absolute;
@@ -24,7 +44,7 @@
 #btn {
   position: fixed;
   z-index: 5;
-  top: 15px;
+  top: 30px;
   left: 15px;
   cursor: pointer;
   -webkit-transition: left 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
@@ -34,7 +54,7 @@
   width: 35px;
   height: 2px;
   margin-bottom: 8px;
-  background-color: #00DFFC;
+  background-color: #3fba3d;
   -webkit-transition: opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
   transition: opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
   transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms;
@@ -113,4 +133,5 @@
 body{
     margin-left: 70px;
     margin-bottom: 40px;
+
 }
