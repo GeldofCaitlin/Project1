@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask
 from flask import render_template, request
 import os
@@ -15,19 +16,6 @@ spi = spidev.SpiDev()
 spi.open(0, 0)
 
 led = 16
-
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(led, GPIO.OUT)
-#
-# GPIO.setup(21, GPIO.OUT)
-# GPIO.setup(20, GPIO.OUT)
-#
-# servoDeur = GPIO.PWM(21, 50)
-# servoRaam = GPIO.PWM(20, 50)
-#
-# servoDeur.start(7.5)
-# servoRaam.start(7.5)
-
 
 def getAdc(channel):
     # check valid channel
@@ -82,9 +70,9 @@ def onboarding1():
 
 @app.route('/index')
 def index_login():
-        temp = print_temp()
-        vocht = float(getAdc(0))
-        return render_template('index.html', temperatuur=temp, vochtigheid=vocht)
+    temp = print_temp()
+    vocht = float(getAdc(0))
+    return render_template('index.html', temperatuur=temp, vochtigheid=vocht)
 
 @app.route('/index', methods=['post'])
 def index():

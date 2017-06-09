@@ -1,5 +1,57 @@
+/*RESET CSS*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;} body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after, q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;} del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
+
 * {
   box-sizing: border-box;
+}
+
+body{
+    font-size: 1.05em;
+	line-height: 1.25em;
+	font-family: Lato, Arial, Helvetica, sans-serif;
+	background: #f9f9f9;
+	color: #555;
+}
+
+a {
+
+	color: #FFF;
+	text-decoration: none;
+	font-weight: medium;
+
+}
+
+a:hover {
+
+	color: #444;
+
+}
+
+/*TABLE*/
+
+.row {
+  padding: 0.5em;
+  text-align: left;
+}
+
+table {
+  width: 90%;
+}
+
+table tr th {
+  padding: 0.5em;
+  text-align: left;
+  background-color: #aaa;
+  color: #fff;
+}
+
+table tr:nth-child(even) {
+  background-color: #ddd;
+}
+
+table tr td {
+  padding: 0.5em;
+  text-align: left;
 }
 
 #logo{
@@ -134,4 +186,75 @@ body{
     margin-left: 70px;
     margin-bottom: 40px;
 
+}
+
+
+/*MEDIA QUERY = RESPONSIVE AANPASSINGEN*/
+@media only screen and (max-width : 740px) {
+
+	header {
+
+			position: relative;
+
+	}
+
+	nav {
+		width: 100%;
+		padding: 0px;
+
+	}
+
+	nav ul{
+
+			display: block;
+			position: relative;
+			background: #FFF;
+			width: 100%;
+
+	}
+
+	nav li {
+
+			text-align: center;
+			width: 100%;
+			margin-bottom: 4px;
+			padding: 10px 0px;
+			background: #CCC;
+
+
+	}
+
+	img {
+
+		margin-top: 20px;
+
+	}
+
+	table thead {
+	    display: none;
+	 }
+
+	 table tr {
+	    display: block;
+	 }
+
+	 table tr td {
+	    border-bottom: none;
+	    display: block;
+	    padding: 0 0.5em;
+	 }
+
+	 .footer-distributed .footer-left,
+		.footer-distributed .footer-right{
+			text-align: center;
+	}
+
+	.footer-distributed .footer-right{
+			float: none;
+			margin: 0 auto 20px;
+	}
+
+	.footer-distributed .footer-left p.footer-links{
+			line-height: 1.8;
+	}
 }
