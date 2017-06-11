@@ -258,3 +258,26 @@ body{
 			line-height: 1.8;
 	}
 }
+
+
+.circle {
+  width: 100px;
+  height:100px;
+  border-radius: 100px;
+  font-size: 20px;
+  color: #fff;
+  line-height: 100px;
+  text-align: center;
+  background: #000;
+    float: left;
+    margin: 0 auto;
+    display: block;
+    vertical-align: middle;
+}
+
+.circles{
+   background-color: palegreen ;
+    margin: 0 auto;
+    display: block;
+    vertical-align: middle;
+}

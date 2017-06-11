@@ -1,3 +1,6 @@
+from mysql import connector     # zelf toegevoegd
+
+
 class DbClass:
     def __init__(self):
         import mysql.connector as connector
@@ -36,6 +39,26 @@ class DbClass:
         sqlQuery = "INSERT INTO Gebruikers(Naam, Emailadres, Wachtwoord_hash) VALUES ('{param1}', '{param2}', md5('{param3}'))"
         # Combineren van de query en parameter
         sqlCommand = sqlQuery.format(param1=value1, param2=value2, param3=value3)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
+        self.__cursor.close()
+
+    def setDataToDatabaseMetingen(self, value, type):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "INSERT INTO Metingen(Datum, Tijd, Waarde_meting, Soort_meting)" \
+                   "VALUES (CURRENT_DATE , CURRENT_TIME , '{param1}', '{param2}')"
+        sqlCommand = sqlQuery.format(param1=value, param2=type)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
+        self.__cursor.close()
+
+    def setDataToDatabaseMetingenMetVerandering(self, value, type, verandering):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "INSERT INTO Metingen(Datum, Tijd, Waarde_meting, Soort_meting, Bijsturen_meting)" \
+                   "VALUES (CURRENT_DATE , CURRENT_TIME , '{param1}', '{param2}', '{param3}')"
+        sqlCommand = sqlQuery.format(param1=value, param2=type, param3=verandering)
 
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()

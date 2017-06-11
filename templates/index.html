@@ -7,13 +7,21 @@
 {% endblock %}
 
 {% block body %}
-    <div>
-    <h2>Temperatuur: </h2>
-        <br>{{ temperatuur }} °C
-    </div>
+<div class="circles">
+        <div>
+            <div class="circle">{{ temperatuur }} °C </div>
+            <h2>Temperatuur</h2>
+        </div>
 
-    <div>
-    <h2>Vochtigheid: </h2>
-        <br>{{ vochtigheid }} %
-    </div>
+        <div>
+            <div class="circle">{{ vochtigheid }} %</div>
+            <h2>Vochtigheid</h2>
+        </div>
+
+        <div>
+            <div class="circle">Open</div>
+            <h2>Stand ramen en deur</h2>
+        </div>
+  </div>
 {% endblock %}
+
