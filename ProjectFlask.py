@@ -8,21 +8,23 @@ import time
 import schedule
 from threading import Thread
 
+app = Flask(__name__)
+
 connection = DbClass()
 sensor = readSensor()
 
 knopBinnen = 26
 knopBuiten = 19
 
-app = Flask(__name__)
+
 
 def writeToDb():
-    # temp = sensor.print_temp()
-    # humidity = float(sensor.getAdc(0))
-    # connection.setDataToDatabaseMetingen(temp, 'temperature')
-    # connection.setDataToDatabaseMetingen(humidity, 'humidity')
-    connection.setDataToDatabaseMetingen(22, 'temperatuur')
-    connection.setDataToDatabaseMetingen(0, 'vochtigheid')
+    temp = sensor.print_temp()
+    humidity = float(sensor.getAdc(0))
+    connection.setDataToDatabaseMetingen(temp, 'temperature')
+    connection.setDataToDatabaseMetingen(humidity, 'humidity')
+    # connection.setDataToDatabaseMetingen(22, 'temperatuur')
+    # connection.setDataToDatabaseMetingen(0, 'vochtigheid')
 
 def emptyDb():
     connection.truncateTable("Metingen")
@@ -37,8 +39,9 @@ GPIO.setwarnings(False)
 
 led = 16
 GPIO.setup(led, GPIO.OUT)
-
 GPIO.setup(21, GPIO.OUT)
+GPIO.setup(20, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
 GPIO.setup(knopBinnen, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(knopBuiten, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 servoDeur = GPIO.PWM(21, 50)
@@ -62,20 +65,26 @@ def getValue():
 
     humidity = sensor.getAdc(0)
     set_hum = 50
+    try:
 
-    if temperature <= set_temp - 5:
-        servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
-        servoRaam.ChangeDutyCycle(7.5)  # turn towards 90 degree
-        servoRaam2.ChangeDutyCycle(7.5)  # turn towards 90 degree
-        connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: opened")
-    if temperature >= set_temp + 5:
-        servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
-        servoRaam.ChangeDutyCycle(12.5)  # turn towards 180 degree
-        servoRaam2.ChangeDutyCycle(12.5)  # turn towards 180 degree
-        connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: closed ")
+        if temperature <= set_temp - 5:
+            servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
+            servoRaam.ChangeDutyCycle(7.5)  # turn towards 90 degree
+            servoRaam2.ChangeDutyCycle(7.5)  # turn towards 90 degree
+            connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: closed")
+        if temperature >= set_temp + 5:
+            servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
+            servoRaam.ChangeDutyCycle(12.5)  # turn towards 180 degree
+            servoRaam2.ChangeDutyCycle(12.5)  # turn towards 180 degree
+            connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: opened ")
 
-    if humidity < 50:
-        GPIO.output(led, GPIO.HIGH)
+        if humidity < 50:
+            GPIO.output(led, GPIO.HIGH)
+            connection.setDataToDatabaseMetingenMetVerandering(humidity, "humidity", "automatic: watering ")
+        else:
+            GPIO.output(led, GPIO.LOW)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 
 def openClose(number):
@@ -87,12 +96,12 @@ def openClose(number):
             if (isKnopGedrukt == 0):
                 if (stand == 0):
                     print("Gedrukt Binnen")
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperatuur", "Deur manueel gesloten")
+                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
                     stand = 1
                     servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
                 else:
                     print("Gedrukt Binnen 2")
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperatuur", "Deur manueel geopend")
+                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
                     stand = 0
                     servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
 
@@ -106,13 +115,13 @@ def openClose(number):
             if (isKnopBuitenGedrukt == 0):
                 if (standBuiten == 0):
                     print("Gedrukt Buiten ")
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperatuur", "Deur manueel gesloten")
+                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
                     standBuiten = 1
                     servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
 
                 else:
                     print("Gedrukt Buiten 2")
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperatuur", "Deur manueel geopend")
+                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
                     standBuiten = 0
                     servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
 
@@ -135,7 +144,8 @@ def onboarding1():
         connection.setDataToDatabaseGebruikers(name, email, password)
         return render_template('onboarding1.html'), True
     else:
-        return "Wachtwoorden komen niet overeen."
+        error = "Passwords do not match."
+    return render_template('onboarding.html', error=error)
 
 @app.route('/index', methods=['post'])
 def index():
@@ -148,21 +158,21 @@ def index():
         if data == []:
             error = "Invalid Credentials. Please try again."
         else:
-            # temp = sensor.print_temp()
-            # vocht = float(sensor.getAdc(0))
-            temp = 22
-            vocht = 56
-            return render_template('index.html', temperatuur=temp, vochtigheid=vocht)
+            temp = sensor.print_temp()
+            humi = float(sensor.getAdc(0))
+            # temp = 22
+            # vocht = 56
+            return render_template('index.html', temperature=temp, humidity=humi)
     return render_template('onboarding.html', error=error)
 
-@app.route('/rapporten')
-def rapporten():
+@app.route('/report')
+def report():
     results = connection.getDataFromDatabase()
-    return render_template('rapporten.html', results=results)
+    return render_template('report.html', results=results)
 
-@app.route('/instellingen')
-def instellingen():
-    return render_template('instellingen.html')
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
 
 schedule.run_pending()
 

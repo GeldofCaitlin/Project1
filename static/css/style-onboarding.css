@@ -107,3 +107,7 @@ img{
   color: #ffffff;
   text-decoration: none;
 }
+
+#error{
+  color: red;
+}

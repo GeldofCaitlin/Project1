@@ -12,9 +12,6 @@ spi.open(0, 0)
 
 led = 16
 
-
-
-
 class readSensor():
 
     def __init__(self):

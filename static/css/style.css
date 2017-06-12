@@ -59,7 +59,7 @@ table tr td {
     display: block;
 }
 
-#afmelden a{
+#signOut a{
     position: absolute;
     top: 5%;
     right: 2%;
@@ -67,7 +67,7 @@ table tr td {
     text-decoration: none;
 }
 
-#afmelden a:hover{
+#signOut a:hover{
     color: grey;
 }
 
