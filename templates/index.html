@@ -6,15 +6,18 @@
 {% block home %}
 {% endblock %}
 
+<div class="bodyIndex">
 {% block body %}
 <div class="circles">
         <div>
-            <div class="circle">{{ temperatuur }} °C </div>
+{#            <div class="circle">{{ temperatuur }} °C </div>#}
+            <div class="circle">20 °C </div>
             <h2>Temperatuur</h2>
         </div>
 
         <div>
-            <div class="circle">{{ vochtigheid }} %</div>
+{#            <div class="circle">{{ vochtigheid }} %</div>#}
+            <div class="circle">56 % </div>
             <h2>Vochtigheid</h2>
         </div>
 
@@ -24,4 +27,4 @@
         </div>
   </div>
 {% endblock %}
-
+</div>

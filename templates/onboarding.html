@@ -14,9 +14,9 @@
             <li class='detail'>Heb je reeds een account?<a href='#'><span>Log in ▼</span></a>
                 <ul>
                     <form action="{{ url_for('index') }}" method="POST">
-                        <li><input type="email" name="emailLogin" placeholder="E-mailadres" required></input></li>
-                        <li><input type="password" name="passwordLogin" placeholder="Wachtwoord" required></input></li>
-                        <li><input type="submit" value="Inloggen"></input></li>
+                        <li><input type="email" name="emailLogin" placeholder="E-mailadres" required></li>
+                        <li><input type="password" name="passwordLogin" placeholder="Wachtwoord" required></li>
+                        <li><input type="submit" value="Inloggen"></li>
                     </form>
                 </ul>
             </li>
@@ -46,7 +46,12 @@
         <div>
             <input type="submit" value="Registreer">
         </div>
+
+        {% if error %}
+        <p><strong>Error: </strong> {{ error }}</p>
+    {% endif %}
     </form>
+
 
     <script>
         var myIndex = 0;

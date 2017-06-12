@@ -63,3 +63,12 @@ class DbClass:
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
         self.__cursor.close()
+
+    def truncateTable(self, table):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "truncate table {param1}"
+        sqlCommand = sqlQuery.format(param1=table)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
+        self.__cursor.close()

@@ -5,6 +5,8 @@ from DbClass import DbClass
 from readSensor import readSensor
 import RPi.GPIO as GPIO
 import time
+import schedule
+from threading import Thread
 
 connection = DbClass()
 sensor = readSensor()
@@ -14,8 +16,27 @@ knopBuiten = 19
 
 app = Flask(__name__)
 
+def writeToDb():
+    # temp = sensor.print_temp()
+    # humidity = float(sensor.getAdc(0))
+    # connection.setDataToDatabaseMetingen(temp, 'temperature')
+    # connection.setDataToDatabaseMetingen(humidity, 'humidity')
+    connection.setDataToDatabaseMetingen(22, 'temperatuur')
+    connection.setDataToDatabaseMetingen(0, 'vochtigheid')
+
+def emptyDb():
+    connection.truncateTable("Metingen")
+
+def run_schedule():
+    while 1:
+        schedule.run_pending()
+        time.sleep(1)
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+
+led = 16
+GPIO.setup(led, GPIO.OUT)
 
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(knopBinnen, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -23,11 +44,39 @@ GPIO.setup(knopBuiten, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 servoDeur = GPIO.PWM(21, 50)
 servoDeur.start(0)
 
+servoRaam = GPIO.PWM(20, 50)
+servoRaam.start(0)
+
+servoRaam2 = GPIO.PWM(12,50)
+servoRaam2.start(0)
+
 isKnopGedruktVorig = 1
 stand = 0
 
 isKnopBuitenGedruktVorig = 1
 standBuiten = 0
+
+def getValue():
+    temperature = sensor.print_temp()
+    set_temp = 26
+
+    humidity = sensor.getAdc(0)
+    set_hum = 50
+
+    if temperature <= set_temp - 5:
+        servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
+        servoRaam.ChangeDutyCycle(7.5)  # turn towards 90 degree
+        servoRaam2.ChangeDutyCycle(7.5)  # turn towards 90 degree
+        connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: opened")
+    if temperature >= set_temp + 5:
+        servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
+        servoRaam.ChangeDutyCycle(12.5)  # turn towards 180 degree
+        servoRaam2.ChangeDutyCycle(12.5)  # turn towards 180 degree
+        connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: closed ")
+
+    if humidity < 50:
+        GPIO.output(led, GPIO.HIGH)
+
 
 def openClose(number):
     global isKnopGedruktVorig, stand, isKnopBuitenGedruktVorig, standBuiten
@@ -88,28 +137,26 @@ def onboarding1():
     else:
         return "Wachtwoorden komen niet overeen."
 
-@app.route('/index')
-def index_login():
-    temp = sensor.print_temp()
-    vocht = float(sensor.getAdc(0))
-    return render_template('index.html', temperatuur=temp, vochtigheid=vocht)
-
 @app.route('/index', methods=['post'])
 def index():
-    email = request.form['emailLogin']
-    password = request.form['passwordLogin']
-    data = connection.getDataFromDatabaseMetVoorwaarde(email, password)
+    error = None
+    if request.method == 'POST':
+        email = request.form['emailLogin']
+        password = request.form['passwordLogin']
+        data = connection.getDataFromDatabaseMetVoorwaarde(email, password)
 
-    if data is None:
-        return "Username or password is wrong"
-    else:
-        temp = sensor.print_temp()
-        vocht = float(sensor.getAdc(0))
-        return render_template('index.html', temperatuur=temp, vochtigheid=vocht)
+        if data == []:
+            error = "Invalid Credentials. Please try again."
+        else:
+            # temp = sensor.print_temp()
+            # vocht = float(sensor.getAdc(0))
+            temp = 22
+            vocht = 56
+            return render_template('index.html', temperatuur=temp, vochtigheid=vocht)
+    return render_template('onboarding.html', error=error)
 
 @app.route('/rapporten')
 def rapporten():
-    # results = []
     results = connection.getDataFromDatabase()
     return render_template('rapporten.html', results=results)
 
@@ -117,10 +164,18 @@ def rapporten():
 def instellingen():
     return render_template('instellingen.html')
 
+schedule.run_pending()
+
 if __name__ == '__main__':
+    schedule.every(15).minutes.do(writeToDb)
+    schedule.every(15).minutes.do(getValue)
+    schedule.every(24).hours.do(emptyDb)
+    t = Thread(target=run_schedule)
+    t.start()
     GPIO.add_event_detect(knopBinnen,GPIO.FALLING,callback=openClose)
     GPIO.add_event_detect(knopBuiten, GPIO.FALLING, callback=openClose)
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', debug=False)
+
 
 
