@@ -8,20 +8,22 @@
 
 {% block body %}
 
-    <div id='dropdown'>
-        <ul>
+    <header>
+        <div id='dropdown'>
+            <ul>
 
-            <li class='detail'>Already have an account?<a href='#'><span>Sign in ▼</span></a>
-                <ul>
-                    <form action="{{ url_for('index') }}" method="POST">
-                        <li><input type="email" name="emailLogin" placeholder="E-mailaddress" required></li>
-                        <li><input type="password" name="passwordLogin" placeholder="Password" required></li>
-                        <li><input type="submit" value="Sign in"></li>
-                    </form>
-                </ul>
-            </li>
-        </ul>
-    </div>
+                <li class='detail'>Already have an account?<a href='#' id="showLogin"><span>Sign in ▼</span></a>
+                    <ul id="loginForm" class="hidden">
+                        <form action="{{ url_for('index') }}" method="POST">
+                            <li><input type="email" name="emailLogin" placeholder="E-mailaddress" required></li>
+                            <li><input type="password" name="passwordLogin" placeholder="Password" required></li>
+                            <li><input type="submit" value="Sign in"></li>
+                        </form>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
 
     <div id="slider">
         <img class="mySlides" src="../static/images/serre1.jpg" style="width:30%">
@@ -30,26 +32,28 @@
     </div>
 
 
-    <form action="{{ url_for('onboarding1') }}" method="POST">
-        {% if error %}
-             <p id="error"><strong>Error: </strong> {{ error }}</p>
-        {% endif %}
-        <div>
-            <input type="text" name="inputName" placeholder="Name" required autofocus>
-        </div>
-        <div>
-            <input type="email" name="inputEmail" placeholder="E-mailaddress" required>
-        </div>
-        <div>
-            <input type="password" name="inputPass" placeholder="Password" required>
-        </div>
-        <div>
-            <input type="password" name="inputRepeatPass" placeholder="Repeat wachtwoord" required>
-        </div>
-        <div>
-            <input type="submit" value="Sign up">
-        </div>
-    </form>
+    <div id="createUser">
+        <form action="{{ url_for('onboarding1') }}" method="POST">
+            {% if error %}
+                 <p id="error"><strong>Error: </strong> {{ error }}</p>
+            {% endif %}
+            <div>
+                <input type="text" name="inputName" placeholder="Name" required autofocus>
+            </div>
+            <div>
+                <input type="email" name="inputEmail" placeholder="E-mailaddress" required>
+            </div>
+            <div>
+                <input type="password" name="inputPass" placeholder="Password" required>
+            </div>
+            <div>
+                <input type="password" name="inputRepeatPass" placeholder="Repeat wachtwoord" required>
+            </div>
+            <div>
+                <input type="submit" value="Sign up">
+            </div>
+        </form>
+    </div>
 
 
     <script>

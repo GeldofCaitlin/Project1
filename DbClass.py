@@ -20,7 +20,7 @@ class DbClass:
         sqlQuery = "SELECT * FROM Metingen"
         self.__cursor.execute(sqlQuery)
         result = self.__cursor.fetchall()
-        self.__cursor.close()
+        # self.__cursor.close()
         return result
 
     def getDataFromDatabaseMetVoorwaarde(self, voorwaarde, voorwaarde2):
@@ -42,7 +42,7 @@ class DbClass:
 
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
-        self.__cursor.close()
+        # self.__cursor.close()
 
     def setDataToDatabaseMetingen(self, value, type):
         self.__cursor = self.__connection.cursor()
@@ -52,7 +52,7 @@ class DbClass:
 
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
-        self.__cursor.close()
+        # self.__cursor.close()
 
     def setDataToDatabaseMetingenMetVerandering(self, value, type, verandering):
         self.__cursor = self.__connection.cursor()
@@ -62,7 +62,7 @@ class DbClass:
 
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
-        self.__cursor.close()
+        # self.__cursor.close()
 
     def truncateTable(self, table):
         self.__cursor = self.__connection.cursor()
@@ -71,4 +71,4 @@ class DbClass:
 
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
-        self.__cursor.close()
+        # self.__cursor.close()

@@ -9,12 +9,33 @@ img{
 
 
 #slider{
-    top: 20%;
-    left: 20%;
+  float: left;
+  width: 50%;
+}
+
+header{
+  height: 10%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+#createUser{
+  float: right;
+  width: 50%;
+      margin: 0;
+    padding: 0;
+    border: 0;
+
+    vertical-align: baseline;
 }
 
 /** ------------------------------------------------ **/
 #dropdown {
+  position: absolute;
+  top: 5%;
+  right: 2%;
   border: none;
   border: 0px;
   margin: 0px;
@@ -22,7 +43,6 @@ img{
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   font-weight: bold;
-  width: 960px;
 }
 
 #dropdown ul {
@@ -56,7 +76,7 @@ img{
   color: #cccccc;
 }
 
-#dropdown li > a:hover, #dropdown ul li:hover > a {
+#dropdown li > a:hover, #dropdown ul li:hover > a, #dropdown li > a:active, #dropdown ul li:active > a {
   background: #218b1f;
   color: white;
   text-decoration: none;
@@ -64,7 +84,7 @@ img{
 
 #dropdown li ul {
 
-  display: none;
+
   height: auto;
   padding: 0px;
   margin: 0px;
@@ -74,8 +94,13 @@ img{
   z-index: 200;
 }
 
-#dropdown li:hover ul {
+#dropdown li:hover ul, #dropdown li:active ul {
   display: block;
+}
+
+.hidden{
+  display: none;
+  
 }
 
 #dropdown li li {
@@ -88,7 +113,7 @@ img{
   width: 240px;
 }
 
-#dropdown li:hover li a {
+#dropdown li:hover li a, #dropdown li:active li a {
   background: none;
 }
 
@@ -102,7 +127,7 @@ img{
   text-align: left;
 }
 
-#dropdown li ul a:hover, #dropdown li ul li:hover > a {
+#dropdown li ul a:hover, #dropdown li ul li:hover > a, #dropdown li ul a:active, #dropdown li ul li:active > a {
   background: #8B3E2F;
   color: #ffffff;
   text-decoration: none;
@@ -110,4 +135,10 @@ img{
 
 #error{
   color: red;
+}
+
+
+#createUser{
+  display: block;
+  float: right;
 }
