@@ -1,0 +1,26 @@
+{% extends "layout-onboarding.html" %}
+{% block title %}
+    iGreenhouse
+{% endblock %}
+
+{% block onboarding1 %}
+{% endblock %}
+
+{% block body %}
+    <h1>Parameters</h1>
+
+        <form action="{{ url_for('index_afterO') }}" method="POST">
+            <div>
+                <input type="text" name="temp" placeholder="Desired temperature" required autofocus>
+            </div>
+            <div>
+                <input type="text" name="hum" placeholder="Desired humidity" required>
+            </div>
+            <div>
+                <input type="submit" value="Done">
+            </div>
+        </form>
+
+
+
+{% endblock %}

@@ -7,5 +7,41 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Instellingen</h1>
+    <h1>Settings</h1>
+
+    <h2>Preferences</h2>
+    <form action="{{ url_for('onboarding2') }}" method="POST">
+        <div>
+        Reports
+        <select name="reports">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+        </select>
+        </div>
+
+        <div>
+        Units
+            <select name="unit">
+                <option value="Fahrenheit" >Fahrenheit</option>
+                <option value="Celcius" >Celcius</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Next">
+    </form>
+
+    <h2>Parameters</h2>
+     <form action="{{ url_for('index_afterO') }}" method="POST">
+            <div>
+                <input type="text" name="temp" placeholder="Desired temperature" required autofocus>
+            </div>
+            <div>
+                <input type="text" name="hum" placeholder="Desired humidity" required>
+            </div>
+            <div>
+                <input type="submit" value="Done">
+            </div>
+     </form>
+
+
 {% endblock %}

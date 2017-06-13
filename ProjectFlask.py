@@ -20,6 +20,7 @@ loggedIn = False
 
 condition = "closed"
 
+
 def writeToDb():
     temp = sensor.print_temp()
     humidity = float(sensor.getAdc(0))
@@ -28,13 +29,16 @@ def writeToDb():
     # connection.setDataToDatabaseMetingen(22, 'temperatuur')
     # connection.setDataToDatabaseMetingen(0, 'vochtigheid')
 
+
 def emptyDb():
     connection.truncateTable("Metingen")
+
 
 def run_schedule():
     while 1:
         schedule.run_pending()
         time.sleep(1)
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -52,7 +56,7 @@ servoDeur.start(0)
 servoRaam = GPIO.PWM(20, 50)
 servoRaam.start(0)
 
-servoRaam2 = GPIO.PWM(12,50)
+servoRaam2 = GPIO.PWM(12, 50)
 servoRaam2.start(0)
 
 isKnopGedruktVorig = 1
@@ -60,6 +64,7 @@ stand = 0
 
 isKnopBuitenGedruktVorig = 1
 standBuiten = 0
+
 
 def getValue():
     global condition
@@ -92,56 +97,104 @@ def getValue():
         GPIO.cleanup()
 
 
+# def openClose(number):
+#     global isKnopGedruktVorig, stand, isKnopBuitenGedruktVorig, standBuiten, condition
+#     isKnopGedrukt = GPIO.input(knopBinnen)
+#
+#     if GPIO.event_detected(knopBinnen):
+#         if (isKnopGedrukt != isKnopGedruktVorig):
+#             if (isKnopGedrukt == 0):
+#                 if (stand == 0):
+#                     print("Gedrukt Binnen")
+#                     condition = "closed"
+#                     connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
+#                     stand = 1
+#                     servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
+#                 else:
+#                     print("Gedrukt Binnen 2")
+#                     condition = "open"
+#                     connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
+#                     stand = 0
+#                     servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
+#
+#         isKnopGedruktVorig = isKnopGedrukt
+#         time.sleep(0.0025)
+#
+#     isKnopBuitenGedrukt = GPIO.input(knopBuiten)
+#
+#     if GPIO.event_detected(knopBuiten):
+#         if (isKnopBuitenGedrukt != isKnopBuitenGedruktVorig):
+#             if (isKnopBuitenGedrukt == 0):
+#                 if (standBuiten == 0):
+#                     print("Gedrukt Buiten ")
+#                     condition = "closed"
+#                     connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
+#                     standBuiten = 1
+#                     servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
+#
+#                 else:
+#                     print("Gedrukt Buiten 2")
+#                     condition = "open"
+#                     connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
+#                     standBuiten = 0
+#                     servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
+#
+#         isKnopBuitenGedruktVorig = isKnopBuitenGedrukt
+#         time.sleep(0.0025)
+
 def openClose(number):
-    global isKnopGedruktVorig, stand, isKnopBuitenGedruktVorig, standBuiten, condition
-    isKnopGedrukt = GPIO.input(knopBinnen)
+    global isKnopGedruktVorig, stand, isKnopBuitenGedruktVorig, standBuiten, condition, servoDeur
+    # isKnopGedrukt = GPIO.input(knopBinnen)
+    servoDeur.start(0)
 
     if GPIO.event_detected(knopBinnen):
-        if (isKnopGedrukt != isKnopGedruktVorig):
-            if (isKnopGedrukt == 0):
-                if (stand == 0):
-                    print("Gedrukt Binnen")
-                    condition = "closed"
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
-                    stand = 1
-                    servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
-                else:
-                    print("Gedrukt Binnen 2")
-                    condition = "open"
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
-                    stand = 0
-                    servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
+        # if (isKnopGedrukt != isKnopGedruktVorig):
+        #     if (isKnopGedrukt == 0):
+        if (stand == 0):
+            print("Gedrukt Binnen")
+            condition = "closed"
+            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
+            stand = 1
+            servoDeur.ChangeDutyCycle(6)  # turn towards 90 degree
+        else:
+            print("Gedrukt Binnen 2")
+            condition = "open"
+            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
+            stand = 0
+            servoDeur.ChangeDutyCycle(2.5)  # turn towards 180 degree
 
-        isKnopGedruktVorig = isKnopGedrukt
-        time.sleep(0.0025)
-
-    isKnopBuitenGedrukt = GPIO.input(knopBuiten)
+        # isKnopGedruktVorig = isKnopGedrukt
+    time.sleep(0.0025)  # isKnopBuitenGedrukt = GPIO.input(knopBuiten)
 
     if GPIO.event_detected(knopBuiten):
-        if (isKnopBuitenGedrukt != isKnopBuitenGedruktVorig):
-            if (isKnopBuitenGedrukt == 0):
-                if (standBuiten == 0):
-                    print("Gedrukt Buiten ")
-                    condition = "closed"
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
-                    standBuiten = 1
-                    servoDeur.ChangeDutyCycle(7.5)  # turn towards 90 degree
 
-                else:
-                    print("Gedrukt Buiten 2")
-                    condition = "open"
-                    connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
-                    standBuiten = 0
-                    servoDeur.ChangeDutyCycle(12.5)  # turn towards 180 degree
+        # if (isKnopBuitenGedrukt != isKnopBuitenGedruktVorig):
+        #     if (isKnopBuitenGedrukt == 0):
+        if (standBuiten == 0):
+            print("Gedrukt Buiten ")
+            condition = "closed"
+            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
+            standBuiten = 1
+            servoDeur.ChangeDutyCycle(6)  # turn towards 90 degree
 
-        isKnopBuitenGedruktVorig = isKnopBuitenGedrukt
-        time.sleep(0.0025)
+        else:
+            print("Gedrukt Buiten 2")
+            condition = "open"
+            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
+            standBuiten = 0
+            servoDeur.ChangeDutyCycle(2.5)  # turn towards 180 degree
 
+            # isKnopBuitenGedruktVorig = isKnopBuitenGedrukt
+
+        time.sleep(3)
+        # servoDeur.ChangeDutyCycle(0)
+        servoDeur.stop()
 @app.route('/')
 def onboarding():
     return render_template('onboarding.html')
 
-@app.route('/onboarding1',methods=['post'])
+
+@app.route('/onboarding1', methods=['post'])
 def onboarding1():
     global loggedIn
     name = request.form['inputName']
@@ -149,13 +202,18 @@ def onboarding1():
     password = request.form['inputPass']
     passwordRepeat = request.form['inputRepeatPass']
     loggedIn = False
+    unique = connection.getDataFromDatabaseEmail(email)
 
-    if password == passwordRepeat:
-        connection.setDataToDatabaseGebruikers(name, email, password)
-        return render_template('onboarding1.html'), True
+    if unique == []:
+        if password == passwordRepeat:
+            connection.setDataToDatabaseGebruikers(name, email, password)
+            return render_template('onboarding1.html'), True
+        else:
+            error = "Passwords do not match."
     else:
-        error = "Passwords do not match."
+        error = "Account with e-mailaddress " + email + " already exists."
     return render_template('onboarding.html', error=error)
+
 
 @app.route('/index', methods=['post'])
 def index():
@@ -178,18 +236,46 @@ def index():
             return render_template('index.html', temperature=temp, humidity=humi, condition=condition)
     return render_template('onboarding.html', error=error)
 
+
+@app.route('/onboarding2', methods=['post'])
+def onboarding2():
+    if request.method == 'POST':
+        reports = request.form['reports']
+        unit = request.form['unit']
+        connection.updateTable(unit, reports)
+        return render_template('onboarding2.html')
+
+
+@app.route('/index', methods=['post'])
+def index_afterO():
+    global loggedIn
+    temp = request.form['temp']
+    hum = request.form['hum']
+    # if request.method == 'POST':
+    # temp = 15
+    # hum = 55
+    connection.insertConfig(hum, temp)
+    temp_ = sensor.print_temp()
+    humi = float(sensor.getAdc(0))
+    loggedIn = True
+    # temp_ = 22
+    # humi = 56
+    return render_template('index.html', temperature=temp_, humidity=humi, condition=condition)
+
+
 @app.route('/index')
 def index_loggedIn():
     global loggedIn, condition
     if loggedIn == True:
-        # temp = sensor.print_temp()
-        # humi = float(sensor.getAdc(0))
-        temp = 22
-        humi = 56
+        temp = sensor.print_temp()
+        humi = float(sensor.getAdc(0))
+        # temp = 22
+        # humi = 56
         return render_template('index.html', temperature=temp, humidity=humi, condition=condition)
     else:
         error = "Please sign in."
-    return render_template('onboarding.html', error = error)
+    return render_template('onboarding.html', error=error)
+
 
 @app.route('/logout')
 def logout():
@@ -208,6 +294,7 @@ def report():
         error = "Please sign in."
     return render_template('onboarding.html', error=error)
 
+
 @app.route('/settings')
 def settings():
     global loggedIn
@@ -217,6 +304,7 @@ def settings():
         error = "Please sign in."
     return render_template('onboarding.html', error=error)
 
+
 schedule.run_pending()
 
 if __name__ == '__main__':
@@ -225,10 +313,8 @@ if __name__ == '__main__':
     schedule.every(24).hours.do(emptyDb)
     t = Thread(target=run_schedule)
     t.start()
-    GPIO.add_event_detect(knopBinnen,GPIO.FALLING,callback=openClose)
-    GPIO.add_event_detect(knopBuiten, GPIO.FALLING, callback=openClose)
+    GPIO.add_event_detect(knopBinnen, GPIO.FALLING, callback=openClose,bouncetime=50)
+    GPIO.add_event_detect(knopBuiten, GPIO.FALLING, callback=openClose,bouncetime=50)
+
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', debug=True)
-
-
-
+    app.run(host='0.0.0.0', debug=False)

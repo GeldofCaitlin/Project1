@@ -3,15 +3,6 @@
  */
 'use strict';
 
-/* Log in*/
-
-var showLogin = document.querySelector("#showLogin");
-var loginForm = document.querySelector("#loginForm");
-showLogin.addEventListener("click", function(event){
-
-    loginForm.classList.remove("hidden");
-});
-
 /* Navigation */
 
 var sidebarBox = document.querySelector('#box'),

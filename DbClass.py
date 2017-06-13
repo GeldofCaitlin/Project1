@@ -23,6 +23,17 @@ class DbClass:
         # self.__cursor.close()
         return result
 
+    def getDataFromDatabaseEmail(self, email):
+        # Query met parameters
+        sqlQuery = "SELECT * FROM Gebruikers WHERE Emailadres = '{param1}'"
+        # Combineren van de query en parameter
+        sqlCommand = sqlQuery.format(param1=email)
+
+        self.__cursor.execute(sqlCommand)
+        result = self.__cursor.fetchall()
+        # self.__cursor.close()
+        return result
+
     def getDataFromDatabaseMetVoorwaarde(self, voorwaarde, voorwaarde2):
         # Query met parameters
         sqlQuery = "SELECT * FROM Gebruikers WHERE Emailadres = '{param1}' and Wachtwoord_hash = MD5('{param2}')"
@@ -72,3 +83,23 @@ class DbClass:
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
         # self.__cursor.close()
+
+    def updateTable(self, unit, reports):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "UPDATE Gebruikers " \
+                   "SET Eenheid = '{param1}', Meldingen = '{param2}' " \
+                   "WHERE Emailadres = 'update@update.be'"
+
+        sqlCommand = sqlQuery.format(param1=unit, param2=reports)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
+
+    def insertConfig(self, hum, temp):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "INSERT INTO ConfiguratieId(GebruikerId, Humidity, Temperature)" \
+                   "VALUES (12, '{param1}', '{param2}')"
+        sqlCommand = sqlQuery.format(param1=hum, param2=temp)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
