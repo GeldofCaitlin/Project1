@@ -15,16 +15,14 @@ body{
 }
 
 a {
-
-	color: #FFF;
+	color: #8f9277;
 	text-decoration: none;
 	font-weight: medium;
-
 }
 
 a:hover {
 
-	color: #444;
+	color: #f0f0f0;
 
 }
 
@@ -36,7 +34,8 @@ a:hover {
 }
 
 table {
-  width: 90%;
+    width: 90%;
+    position: absolute;
 }
 
 table tr th {
@@ -55,143 +54,92 @@ table tr td {
   text-align: left;
 }
 
-/* HEADER */
+/*HEADER*/
+header {
+
+	background: rgba(225, 218, 218, 0.71);
+	width: 100%;
+	height: 15%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
 #logo{
     margin: 0 auto;
+    text-align: center;
+    position: relative;
+
+}
+
+
+    /* SIGN OUT*/
+#signOut{
+    float: right;
+    padding: 20px;
+}
+
+    /* NAVIGATION*/
+.dropbtn {
+
+    margin: 20px;
+	float: left;
+	width: 200px;
+	height: 40px;
+	display: block;
+
+    background-color: #8f9277;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    margin: 40px 20px 20px 20px;
+	float: left;
+	width: 200px;
+	height: 40px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
     display: block;
 }
 
-    /* SIGN OUT*/
-#signOut a{
-    top: 12%;
-    right: 0;
-    color: #218b1f;
-    text-decoration: none;
-    width: 0;
-    ;
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
-#signOut a:hover{
-    color: grey;
+.dropdown:hover .dropbtn {
+    background-color: #8f9277;
 }
 
-header{
-    border-bottom: 2px solid #cdcdcd;
+/*CONTENT*/
+section {
+    padding-top: 4.5%;
+	margin: 80px auto 40px;
+	max-width: 980px;
+	position: relative;
+    min-height: 100%;
 }
-
-#page-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-#title {
-  color: #f6f6f6;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  font-size: 2em;
-}
-
-#btn {
-  position: fixed;
-  z-index: 5;
-  top: 30px;
-  left: 15px;
-  cursor: pointer;
-  -webkit-transition: left 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-  transition: left 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-}
-#btn div {
-  width: 35px;
-  height: 2px;
-  margin-bottom: 8px;
-  background-color: #3fba3d;
-  -webkit-transition: opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-  transition: opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-  transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms;
-  transition: transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91), opacity 500ms, background-color 250ms, -webkit-transform 500ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-}
-
-#btn.active {
-  left: 230px;
-}
-
-#btn.active div {
-  background-color: #343838;
-}
-
-#btn.active #top {
-  -webkit-transform: translateY(10px) rotate(-135deg);
-          transform: translateY(10px) rotate(-135deg);
-}
-#btn.active #middle {
-  opacity: 0;
-}
-
-#btn.active #bottom {
-  -webkit-transform: translateY(-10px) rotate(-45deg);
-          transform: translateY(-10px) rotate(-45deg);
-}
-
-#box {
-  position: fixed;
-  z-index: 4;
-  overflow: auto;
-  top: 0px;
-  left: -275px;
-  width: 275px;
-  opacity: 0;
-  padding: 20px 0px;
-  height: 100%;
-  background-color: #f6f6f6;
-  color: #343838;
-  -webkit-transition: all 350ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-  transition: all 350ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
-}
-
-#box.active {
-  left: 0px;
-  opacity: 1;
-}
-
-#items {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-}
-#items .item {
-  position: relative;
-  cursor: pointer;
-  font-size: 2em;
-  padding: 15px 30px;
-  -webkit-transition: all 250ms;
-  transition: all 250ms;
-}
-#items .item:hover {
-  padding: 15px 45px;
-  background-color: rgba(52, 56, 56, 0.2);
-}
-
-#btn, #btn * {
-  will-change: transform;
-}
-
-#box {
-  will-change: transform, opacity;
-}
-
-body{
-    margin-left: 70px;
-    margin-bottom: 40px;
-
-}
-
 
 /*MEDIA QUERY = RESPONSIVE AANPASSINGEN*/
 @media only screen and (max-width : 740px) {
@@ -265,29 +213,59 @@ body{
 
 
 .circle {
-  width: 100px;
-  height:100px;
-  border-radius: 100px;
-  font-size: 20px;
-  color: #fff;
-  line-height: 100px;
-  text-align: center;
-  background: #000;
+    width: 100px;
+    height:100px;
+    border-radius: 100px;
+    font-size: 20px;
+    color: #fff;
+    line-height: 100px;
+    text-align: center;
+    background: #000;
     float: left;
-    margin: 0 auto;
-    display: block;
+    display: table-cell;
     vertical-align: middle;
 }
 
 .circles{
-   background-color: palegreen ;
-    margin: 0 auto;
-    display: block;
-    vertical-align: middle;
+    background-color: palegreen ;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: table;
+    text-align: center;
 }
 
 .bodyIndex{
     height: 100%;
+    width: 100%
+}
+
+/*FORM*/
+input{
+  color:#3c3c3c;
+    font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+	font-size: 18px;
+	border-radius: 0;
+	line-height: 22px;
+	background-color: #fbfbfb;
+	padding: 13px 13px 13px 54px;
+	margin-bottom: 10px;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  border: 3px solid rgba(0,0,0,0);
+}
+
+form input:focus{
+    	background: #fff;
+	box-shadow: 0;
+	border: 3px solid #3498db;
+	color: #3498db;
+	outline: none;
+  padding: 13px 13px 13px 54px;
 }
 
 /*FOOTER*/
@@ -298,9 +276,12 @@ body{
 	box-sizing: border-box;
 	width: 100%;
 	text-align: left;
-	font: medium 14px sans-serif;
+    position: absolute;
+    bottom: 0;
 	padding: 45px 80px;
 	margin-top: 80px;
+    height: 15%;
+    z-index: 100;
 }
 
 .footer-distributed .footer-left p{

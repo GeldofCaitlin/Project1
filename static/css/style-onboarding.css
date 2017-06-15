@@ -1,3 +1,7 @@
+body{
+  background-color: #eeeeee;
+}
+
 img{
     top: 0%;
     left: 0%;
@@ -22,13 +26,63 @@ header{
 }
 
 #createUser{
-  float: right;
-  width: 50%;
-      margin: 0;
-    padding: 0;
-    border: 0;
+      width: 450px;
+  margin: auto;
+  background: rgba(0,0,0,0.4);
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 7px;
+}
 
-    vertical-align: baseline;
+#createUser input{
+ width: 90%;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-clip: padding-box;
+    display: block;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+}
+
+#createUser input:focus{
+  background-color: rgba(201, 201, 201, 0.2);
+    -moz-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
+    -webkit-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
+    box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
+	  overflow: hidden;
+}
+
+#createUser input[type=submit] {
+    cursor: pointer;
+}
+
+#createUser button{
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+	float:left;
+	width: 90%;
+	border: #fbfbfb solid 4px;
+	cursor:pointer;
+	background-color: #3498db;
+	color:white;
+	font-size:24px;
+	padding-top:22px;
+	padding-bottom:22px;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+  margin-top:-4px;
+  font-weight:700;
+}
+
+#createUser button:hover{
+  background-color: #f0f0f0;
+  color: #3c3c3c;
+
 }
 
 /** ------------------------------------------------ **/
@@ -135,10 +189,4 @@ header{
 
 #error{
   color: red;
-}
-
-
-#createUser{
-  display: block;
-  float: right;
 }

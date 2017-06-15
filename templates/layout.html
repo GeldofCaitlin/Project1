@@ -14,32 +14,31 @@
     <header>
         <nav>
             {% block navigation %}
-                <div id="btn">
-                        <div id='top'></div>
-                        <div id='middle'></div>
-                        <div id='bottom'></div>
+                <div class="dropdown">
+                  <button class="dropbtn">MENU</button>
+                      <div class="dropdown-content">
+                        <a {% block home %} {% endblock %} href="{{ url_for('index') }}">Home</a>
+                        <a {% block report %} {% endblock %} href="{{ url_for('report') }}">Report</a>
+                        <a {% block settings %} {% endblock %} href="{{ url_for('settings') }}">Settings</a>
+                      </div>
                 </div>
-                <div id="box">
-                        <div id="items">
-                                <div class="item"><a {% block home %} {% endblock %} href="{{ url_for('index') }}">Home</a></div>
-                                <div class="item"><a {% block report %} {% endblock %} href="{{ url_for('report') }}">Report</a></div>
-                                <div class="item"><a {% block settings %} {% endblock %} href="{{ url_for('settings') }}">Settings</a></div>
-                        </div>
+
+                <div>
+                <a href="{{ url_for('index') }}"><img id="logo" src="../static/images/Logo.png" alt="Logo" width="15%"></a>
+                </div>
+
+                <div id="signOut">
+                    <a href="{{ url_for('logout') }}">Sign out</a>
                 </div>
             {% endblock %}
         </nav>
-
-        <a href="{{ url_for('index') }}"><img id="logo" src="../static/images/Logo.png" alt="Logo" width="15%"></a>
-
-        <div id="signOut">
-            <a href="{{ url_for('logout') }}">Sign out</a>
-        </div>
     </header>
 
 
-
+<section>
 {% block body %}
 {% endblock %}
+</section>
 
     <footer class="footer-distributed">
 

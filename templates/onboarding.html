@@ -34,9 +34,11 @@
 
     <div id="createUser">
         <form action="{{ url_for('onboarding1') }}" method="POST">
+            <h1>Register Now</h1>
             {% if error %}
                  <p id="error"><strong>Error: </strong> {{ error }}</p>
             {% endif %}
+
             <div>
                 <input type="text" name="inputName" placeholder="Name" required autofocus>
             </div>
