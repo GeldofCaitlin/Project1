@@ -50,40 +50,64 @@ GPIO.setup(20, GPIO.OUT)
 GPIO.setup(12, GPIO.OUT)
 GPIO.setup(knopBinnen, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(knopBuiten, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
 servoDeur = GPIO.PWM(21, 50)
-
 servoRaam = GPIO.PWM(20, 50)
-servoRaam.start(0)
-
 servoRaam2 = GPIO.PWM(12, 50)
-servoRaam2.start(0)
 
-stand = 0
-
-standBuiten = 0
 
 
 def getValue():
-    global condition
+    global condition, servoDeur, servoRaam, servoRaam2
+
+    # servoRaam.start(2.5)
+    # servoDeur.star(2.5)
+    # servoRaam.start(2.5)
+
     temperature = sensor.print_temp()
-    set_temp = 26
+    set_temp = 60
 
     humidity = sensor.getAdc(0)
     set_hum = 50
     try:
 
         if temperature <= set_temp - 5:
-            servoDeur.ChangeDutyCycle(7.5)
-            servoRaam.ChangeDutyCycle(7.5)
-            servoRaam2.ChangeDutyCycle(7.5)
+            servoDeur.ChangeFrequency(50)
+            servoRaam.ChangeFrequency(50)
+            servoRaam2.ChangeFrequency(50)
+
+            servoDeur.start(0)
+            servoRaam.start(0)
+            servoRaam2.start(0)
+
+            servoDeur.ChangeDutyCycle(2.5)
+            servoRaam.ChangeDutyCycle(2.5)
+            servoRaam2.ChangeDutyCycle(2.5)
             condition = "closed"
             connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: closed")
+            time.sleep(3)
+            servoDeur.stop()
+            servoRaam.stop()
+            servoRaam2.stop()
+
         if temperature >= set_temp + 5:
-            servoDeur.ChangeDutyCycle(12.5)
-            servoRaam.ChangeDutyCycle(12.5)
-            servoRaam2.ChangeDutyCycle(12.5)
+            servoDeur.ChangeFrequency(50)
+            servoRaam.ChangeFrequency(50)
+            servoRaam2.ChangeFrequency(50)
+
+            servoDeur.start(0)
+            servoRaam.start(0)
+            servoRaam2.start(0)
+
+            servoDeur.ChangeDutyCycle(6)
+            servoRaam.ChangeDutyCycle(6)
+            servoRaam2.ChangeDutyCycle(6)
             condition = "open"
             connection.setDataToDatabaseMetingenMetVerandering(temperature, "temperature", "automatic: opened ")
+            time.sleep(3)
+            servoDeur.stop()
+            servoRaam.stop()
+            servoRaam2.stop()
 
         if humidity < set_hum:
             GPIO.output(led, GPIO.HIGH)
@@ -94,27 +118,25 @@ def getValue():
         GPIO.cleanup()
 
 def openClose(number):
-    global stand, standBuiten, condition, servoDeur
+    global condition, servoDeur
 
     if GPIO.event_detected(knopBinnen):
-        if (stand == 0):
+        if (condition == "closed"):
             servoDeur.ChangeFrequency(50)
             servoDeur.start(0)
             print("Gedrukt Binnen")
-            condition = "closed"
+            condition = "opened"
             connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
-            stand = 1
-            servoDeur.ChangeDutyCycle(6)
+            servoDeur.ChangeDutyCycle(2.5)
             time.sleep(3)
             servoDeur.stop()
         else:
             servoDeur.ChangeFrequency(50)
             servoDeur.start(0)
             print("Gedrukt Binnen 2")
-            condition = "open"
+            condition = "closed"
             connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
-            stand = 0
-            servoDeur.ChangeDutyCycle(2.5)
+            servoDeur.ChangeDutyCycle(6)
             time.sleep(3)
             servoDeur.stop()
     # time.sleep(3)
@@ -123,12 +145,12 @@ def openClose(number):
 
 
     if GPIO.event_detected(knopBuiten):
-        if (standBuiten == 0):
+        if (condition == "opened"):
             servoDeur.ChangeFrequency(50)
             servoDeur.start(0)
             print("Gedrukt Buiten ")
-            condition = "closed"
-            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
+            condition = "opened"
+            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
             standBuiten = 1
             servoDeur.ChangeDutyCycle(6)  # turn towards 90 degree
             # time.sleep(2)
@@ -137,8 +159,8 @@ def openClose(number):
             servoDeur.ChangeFrequency(50)
             servoDeur.start(0)
             print("Gedrukt Buiten 2")
-            condition = "open"
-            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
+            condition = "opened"
+            connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
             standBuiten = 0
             servoDeur.ChangeDutyCycle(2.5)  # turn towards 180 degree
             # time.sleep(2)
@@ -267,7 +289,7 @@ schedule.run_pending()
 
 if __name__ == '__main__':
     schedule.every(15).minutes.do(writeToDb)
-    schedule.every(15).minutes.do(getValue)
+    schedule.every(0.5).minutes.do(getValue)
     schedule.every(24).hours.do(emptyDb)
     t = Thread(target=run_schedule)
     t.start()

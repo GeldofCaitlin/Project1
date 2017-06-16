@@ -17,14 +17,14 @@
                 <div class="dropdown">
                   <button class="dropbtn">MENU</button>
                       <div class="dropdown-content">
-                        <a {% block home %} {% endblock %} href="{{ url_for('index') }}">Home</a>
-                        <a {% block report %} {% endblock %} href="{{ url_for('report') }}">Report</a>
-                        <a {% block settings %} {% endblock %} href="{{ url_for('settings') }}">Settings</a>
+                        <a href="{{ url_for('index') }}">Home</a>
+                        <a  href="{{ url_for('report') }}">Report</a>
+                        <a  href="{{ url_for('settings') }}">Settings</a>
                       </div>
                 </div>
 
                 <div>
-                <a href="{{ url_for('index') }}"><img id="logo" src="../static/images/Logo.png" alt="Logo" width="15%"></a>
+                <a href="{{ url_for('index') }}"><img id="logo" src="../static/images/Logo.png" alt="Logo"></a>
                 </div>
 
                 <div id="signOut">
@@ -37,6 +37,8 @@
 
 <section>
 {% block body %}
+
+    <div class="push"></div>
 {% endblock %}
 </section>
 
@@ -54,14 +56,12 @@
 			<div class="footer-left">
 
 				<p class="footer-links">
-					<a href="#">Home</a>
-					<a href="#">Page 2</a>
-					<a href="#">Page 3</a>
-					<a href="#">Page 4</a>
-					<a href="#">Page 5</a>
+					<a href="{{ url_for('index') }}">Home</a>
+                    <a href="{{ url_for('report') }}">Report</a>
+                    <a href="{{ url_for('settings') }}">Settings</a>
 				</p>
 
-				<p>Your Name &copy; 2015</p>
+				<p>Caitlin Geldof &copy; 2017</p>
 			</div>
 
 	</footer>

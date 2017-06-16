@@ -6,6 +6,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   box-sizing: border-box;
 }
 
+html, body{
+	height: 100%;
+	margin: 0;
+	display: inline;
+}
+
 body{
     font-size: 1.05em;
 	line-height: 1.25em;
@@ -17,7 +23,6 @@ body{
 a {
 	color: #8f9277;
 	text-decoration: none;
-	font-weight: medium;
 }
 
 a:hover {
@@ -35,7 +40,7 @@ a:hover {
 
 table {
     width: 90%;
-    position: absolute;
+	margin-bottom: 50px;
 }
 
 table tr th {
@@ -55,40 +60,42 @@ table tr td {
 }
 
 /*HEADER*/
-header {
-
-	background: rgba(225, 218, 218, 0.71);
-	width: 100%;
-	height: 15%;
+header{
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 100;
+	width: 100%;
+	background: rgba(225, 218, 218, 1);
+	height: 100px;
+
+}
+header nav {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
 }
 
-#logo{
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
 
+#logo{
+	width: 45%;
+	max-height: 100px;
 }
 
 
     /* SIGN OUT*/
 #signOut{
-    float: right;
-    padding: 20px;
+	line-height:  100px;
+	margin-right: 25px;
 }
 
     /* NAVIGATION*/
 .dropbtn {
-
     margin: 20px;
 	float: left;
 	width: 200px;
 	height: 40px;
 	display: block;
-
     background-color: #8f9277;
     color: white;
     padding: 16px;
@@ -98,12 +105,10 @@ header {
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
 }
 
 .dropdown-content {
-    margin: 40px 20px 20px 20px;
+    margin: 60px 20px 20px 20px;
 	float: left;
 	width: 200px;
 	height: 40px;
@@ -122,14 +127,19 @@ header {
     display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+	background-color: #f1f1f1;
+}
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-.dropdown:hover .dropbtn {
+.dropdown:hover .dropdown-content {
     background-color: #8f9277;
+	overflow: visible;
+	height: 150px;
+	margin-top:50px;
 }
 
 /*CONTENT*/
@@ -139,6 +149,8 @@ section {
 	max-width: 980px;
 	position: relative;
     min-height: 100%;
+	margin-bottom: -50px;
+	padding-bottom: 150px;
 }
 
 /*MEDIA QUERY = RESPONSIVE AANPASSINGEN*/
@@ -209,8 +221,8 @@ section {
 	.footer-distributed .footer-left p.footer-links{
 			line-height: 1.8;
 	}
-}
 
+}
 
 .circle {
     width: 100px;
@@ -220,19 +232,26 @@ section {
     color: #fff;
     line-height: 100px;
     text-align: center;
-    background: #000;
-    float: left;
-    display: table-cell;
+    background: #b0b0b0;
     vertical-align: middle;
+	margin: 80px 80px 20px 80px;
+	box-shadow: 2px 2px 4px #000000;
 }
 
 .circles{
     background-color: palegreen ;
+	opacity: 0.5;
     height: 100%;
     width: 100%;
     position: absolute;
-    display: table;
     text-align: center;
+	display: flex;
+    flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 80px;
+
+
 }
 
 .bodyIndex{
@@ -276,9 +295,9 @@ form input:focus{
 	box-sizing: border-box;
 	width: 100%;
 	text-align: left;
-    position: absolute;
     bottom: 0;
-	padding: 45px 80px;
+	position: fixed;
+	padding: 4px 80px;
 	margin-top: 80px;
     height: 15%;
     z-index: 100;

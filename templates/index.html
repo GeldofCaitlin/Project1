@@ -10,20 +10,22 @@
 {% block body %}
 <div class="circles">
         <div>
-            <div class="circle">{{ temperature }} °C </div>
-{#            <div class="circle">20 °C </div>#}
+{#            <div class="circle">{{ temperature }} °C </div>#}
+
+            <a {% block report %} {% endblock %} href="{{ url_for('report') }}"><div class="circle">{{ temperature }} °C </div></a>
             <h2>Temperature</h2>
         </div>
 
         <div>
+{#            <div class="circle">{{ humidity }} %</div>#}
             <div class="circle">{{ humidity }} %</div>
-{#            <div class="circle">56 % </div>#}
+{#            <a {% block report %} {% endblock %} href="{{ url_for('report') }}"><div class="circle">56 % </div></a>#}
             <h2>Humidity</h2>
         </div>
 
         <div>
+{#            <div class="circle">{{ condition }}</div>#}
             <div class="circle">{{ condition }}</div>
-{#            <div class="circle">Open</div>#}
             <h2>Condition windows & door</h2>
         </div>
   </div>
