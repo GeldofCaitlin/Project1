@@ -1,6 +1,3 @@
-from mysql import connector     # zelf toegevoegd
-
-
 class DbClass:
     def __init__(self):
         import mysql.connector as connector
@@ -13,7 +10,7 @@ class DbClass:
         }
 
         self.__connection = connector.connect(**self.__dsn)
-        self.__cursor = self.__connection.cursor()
+        self.__cursor = self.__connection.cursor(buffered=True)
 
     def getDataFromDatabase(self):
         # Query zonder parameters
@@ -98,8 +95,18 @@ class DbClass:
     def insertConfig(self, hum, temp):
         self.__cursor = self.__connection.cursor()
         sqlQuery = "INSERT INTO ConfiguratieId(GebruikerId, Humidity, Temperature)" \
-                   "VALUES (12, '{param1}', '{param2}')"
+                   "VALUES (16, {param1}, {param2})"
         sqlCommand = sqlQuery.format(param1=hum, param2=temp)
 
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
+
+    # def getDesiredTemp(self, id):
+    #     self.__cursor = self.__connection.cursor()
+    #     sqlQuery = "SELECT Temperature FROM ConfiguratieId WHERE GebruikerId = '{param1}'"
+    #     sqlCommand = sqlQuery.format(param1=id)
+    #
+    #     self.__cursor.execute(sqlCommand)
+    #     self.__connection.commit()
+
+

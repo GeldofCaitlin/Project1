@@ -25,37 +25,49 @@
         </div>
     </header>
 
-    <div id="slider">
-        <img class="mySlides" src="../static/images/serre1.jpg" style="width:30%">
-        <img class="mySlides" src="../static/images/serre2.jpg" style="width:30%">
-        <img class="mySlides" src="../static/images/serre3.jpg" style="width:30%">
-    </div>
+    <section>
+
+        <div id="sliderNewUser">
+
+            <div id="slider">
+                <img class="mySlides" src="../static/images/DSC_0169-min.JPG" style="width:450px">
+                <img class="mySlides" src="../static/images/DSC_0172-min.JPG" style="width:450px">
+                <img class="mySlides" src="../static/images/DSC_0175-min.JPG" style="width:450px">
+            </div>
 
 
-    <div id="createUser">
-        <form action="{{ url_for('onboarding1') }}" method="POST">
-            <h1>Register Now</h1>
-            {% if error %}
-                 <p id="error"><strong>Error: </strong> {{ error }}</p>
-            {% endif %}
+            <div id="form-main">
+                <div id="form-div">
+                    <form class="form" id="form1" action="{{ url_for('onboarding1') }}" method="POST">
+                        <h1>Register Now</h1>
+                        <div>
+                            <input class="input" type="text" name="inputName" placeholder="Name" required autofocus>
+                        </div>
 
-            <div>
-                <input type="text" name="inputName" placeholder="Name" required autofocus>
+                        <div>
+                            <input class="input" type="email" name="inputEmail" placeholder="Email address" required>
+                        </div>
+
+                        <div>
+                            <input class="input" type="password" name="inputPass" placeholder="Password" required>
+                        </div>
+
+                        <div>
+                            <input class="input" type="password" name="inputRepeatPass" placeholder="Repeat password"
+                                   required>
+                        </div>
+
+
+                        <div class="submit">
+                            <input type="submit" value="Sign up" id="button">
+                            <div class="ease"></div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
-            <div>
-                <input type="email" name="inputEmail" placeholder="Emailaddress" required>
-            </div>
-            <div>
-                <input type="password" name="inputPass" placeholder="Password" required>
-            </div>
-            <div>
-                <input type="password" name="inputRepeatPass" placeholder="Repeat password" required>
-            </div>
-            <div>
-                <input type="submit" value="Sign up">
-            </div>
-        </form>
-    </div>
+        </div>
+    </section>
 
 
     <script>
@@ -73,7 +85,7 @@
                 myIndex = 1
             }
             x[myIndex - 1].style.display = "block";
-            setTimeout(carousel, 5000); // Change image every 5 seconds
+            setTimeout(carousel, 5000);
         }
     </script>
 

@@ -7,27 +7,29 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Preferences</h1>
+    <div id="preferences">
+        <h1>Preferences</h1>
 
-    <form action="{{ url_for('onboarding2') }}" method="POST">
-        <div>
-        Reports
-        <select name="reports">
-            <option value="on">On</option>
-            <option value="off">Off</option>
-        </select>
-        </div>
+        <form action="{{ url_for('onboarding2') }}" method="POST">
+            <div>
+                Reports
+                <select name="reports">
+                    <option value="on">On</option>
+                    <option value="off">Off</option>
+                </select>
+            </div>
 
-        <div>
-        Units
-            <select name="unit">
-                <option value="Fahrenheit" >Fahrenheit</option>
-                <option value="Celcius" >Celcius</option>
-            </select>
-        </div>
+            <div>
+                Units
+                <select name="unit">
+                    <option value="Fahrenheit">Fahrenheit</option>
+                    <option value="Celcius">Celcius</option>
+                </select>
+            </div>
 
-        <input type="submit" value="Next">
-    </form>
+            <input id="next" type="submit" value="Next">
+        </form>
+    </div>
 
 
 {% endblock %}

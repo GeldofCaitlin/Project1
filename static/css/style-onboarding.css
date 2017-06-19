@@ -1,5 +1,6 @@
 body{
   background-color: #eeeeee;
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
 
 img{
@@ -8,84 +9,35 @@ img{
 }
 
 .mySlides {
-    display:none;
+  margin-top: 75px;
+  display:none;
 }
 
-
-#slider{
-  float: left;
-  width: 50%;
+#sliderNewUser{
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  display: -webkit-flex ;
+  -webkit-flex-flow: wrap;
 }
 
+section{
+  width: 900px;
+  margin: auto;
+
+}
+
+/* HEADER */
 header{
-  height: 10%;
   margin: 0;
   padding: 0;
   border: 0;
   vertical-align: baseline;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  -webkit-flex-flow: wrap;
 }
 
-#createUser{
-      width: 450px;
-  margin: auto;
-  background: rgba(0,0,0,0.4);
-  padding: 10px 20px;
-  margin-top: 20px;
-  border-radius: 7px;
-}
-
-#createUser input{
- width: 90%;
-    height: 30px;
-    border: none;
-    border-radius: 10px;
-    background-clip: padding-box;
-    display: block;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 18px;
-    color: #fff;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-bottom: 20px;
-}
-
-#createUser input:focus{
-  background-color: rgba(201, 201, 201, 0.2);
-    -moz-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
-    -webkit-box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
-    box-shadow: 0 0 5px 1px rgba(255,255,255,.5);
-	  overflow: hidden;
-}
-
-#createUser input[type=submit] {
-    cursor: pointer;
-}
-
-#createUser button{
-  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
-	float:left;
-	width: 90%;
-	border: #fbfbfb solid 4px;
-	cursor:pointer;
-	background-color: #3498db;
-	color:white;
-	font-size:24px;
-	padding-top:22px;
-	padding-bottom:22px;
-	-webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	transition: all 0.3s;
-  margin-top:-4px;
-  font-weight:700;
-}
-
-#createUser button:hover{
-  background-color: #f0f0f0;
-  color: #3c3c3c;
-
-}
-
-/** ------------------------------------------------ **/
+/* LOGIN DROPDOWN*/
 #dropdown {
   position: absolute;
   top: 5%;
@@ -131,14 +83,12 @@ header{
 }
 
 #dropdown li > a:hover, #dropdown ul li:hover > a, #dropdown li > a:active, #dropdown ul li:active > a {
-  background: #218b1f;
+  background: #8f9277;
   color: white;
   text-decoration: none;
 }
 
 #dropdown li ul {
-
-
   height: auto;
   padding: 0px;
   margin: 0px;
@@ -154,7 +104,6 @@ header{
 
 .hidden{
   display: none;
-  
 }
 
 #dropdown li li {
@@ -190,3 +139,126 @@ header{
 #error{
   color: red;
 }
+
+#form-main{
+  margin-right: 5%;
+}
+
+.input {
+	color:#3c3c3c;
+	font-family: Helvetica, Arial, sans-serif;
+  font-weight:500;
+	font-size: 18px;
+	border-radius: 0;
+	line-height: 22px;
+	background-color: #fbfbfb;
+	padding: 13px 13px 13px 54px;
+	margin-bottom: 10px;
+	width:100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+  border: 3px solid rgba(0,0,0,0);
+}
+
+.input:focus{
+	background: #fff;
+	box-shadow: 0;
+	border: 3px solid #8f9277;
+	color: #8f9277;
+	outline: none;
+  padding: 13px 13px 13px 54px;
+}
+
+.focused{
+	color: #5ca333;
+	border:#5ca333 solid 3px;
+}
+
+#button{
+	font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+	float:left;
+	width: 100%;
+	border: #fbfbfb solid 4px;
+	cursor:pointer;
+	background-color: #8f9277;
+	color:white;
+	font-size:24px;
+	padding-top:22px;
+	padding-bottom:22px;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+  margin-top:-4px;
+  font-weight:700;
+}
+
+#button:hover{
+	background-color: rgba(0,0,0,0);
+	color: #5ca333;
+}
+
+.submit:hover {
+	color: #8f9277;
+}
+
+.ease {
+	width: 0px;
+	height: 74px;
+	background-color: #fbfbfb;
+	-webkit-transition: .3s ease;
+	-moz-transition: .3s ease;
+	-o-transition: .3s ease;
+	-ms-transition: .3s ease;
+	transition: .3s ease;
+}
+
+.submit:hover .ease{
+  width:100%;
+  background-color:white;
+}
+
+@media only screen and (max-width: 580px) {
+	#form-div{
+		left: 3%;
+		margin-right: 3%;
+		width: 88%;
+		margin-left: 0;
+		padding-left: 3%;
+		padding-right: 3%;
+	}
+}
+
+/* Preferences & Paramters */
+#preferences, #parameters{
+    margin-left: 150px;
+    line-height: 200%;
+}
+
+#next{
+    background-color: transparent;
+    border: 2px solid #8f9277;
+  border-radius: 4px;
+  display: inline-block;
+  color: #8f9277;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  line-height: 40px;
+  letter-spacing: 1px;
+  margin: 5px;
+  overflow: hidden;
+  padding: 0 22px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all .2s ease-in-out;
+}
+
+#next:hover{
+    background-color: #8f9277;
+    color: #eeeeee;
+    cursor: pointer;
+}
+

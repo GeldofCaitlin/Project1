@@ -26,13 +26,9 @@ def writeToDb():
     humidity = float(sensor.getAdc(0))
     connection.setDataToDatabaseMetingen(temp, 'temperature')
     connection.setDataToDatabaseMetingen(humidity, 'humidity')
-    # connection.setDataToDatabaseMetingen(22, 'temperatuur')
-    # connection.setDataToDatabaseMetingen(0, 'vochtigheid')
-
 
 def emptyDb():
     connection.truncateTable("Metingen")
-
 
 def run_schedule():
     while 1:
@@ -65,7 +61,7 @@ def getValue():
     # servoRaam.start(2.5)
 
     temperature = sensor.print_temp()
-    set_temp = 60
+    set_temp = 26
 
     humidity = sensor.getAdc(0)
     set_hum = 50
@@ -229,18 +225,20 @@ def onboarding2():
 @app.route('/index', methods=['post'])
 def index_afterO():
     global loggedIn
-    temp = request.form['temp']
-    hum = request.form['hum']
-    # if request.method == 'POST':
-    # temp = 15
-    # hum = 55
-    connection.insertConfig(hum, temp)
-    temp_ = sensor.print_temp()
-    humi = float(sensor.getAdc(0))
-    loggedIn = True
-    # temp_ = 22
-    # humi = 56
-    return render_template('index.html', temperature=temp_, humidity=humi, condition=condition)
+    if request.method == 'POST':
+        temp = request.form['temp']
+        hum = request.form['hum']
+        # if request.method == 'POST':
+        # temp = 15
+        # hum = 55
+        connection.insertConfig(hum, temp)
+        temp_ = sensor.print_temp()
+        humi = float(sensor.getAdc(0))
+        loggedIn = True
+        # temp_ = 22
+        # humi = 56
+        return render_template('index.html', temperature=temp_, humidity=humi, condition=condition)
+    # return render_template('index.html')
 
 
 @app.route('/index')
@@ -249,8 +247,6 @@ def index_loggedIn():
     if loggedIn == True:
         temp = sensor.print_temp()
         humi = float(sensor.getAdc(0))
-        # temp = 22
-        # humi = 56
         return render_template('index.html', temperature=temp, humidity=humi, condition=condition)
     else:
         error = "Please sign in."
@@ -278,8 +274,13 @@ def report():
 @app.route('/settings')
 def settings():
     global loggedIn
+    temp = 26
+    # desiredTemp = connection.getDesiredTemp(20)
+
     if loggedIn == True:
-        return render_template('settings.html')
+        # desiredTemp = connection.getDesiredTemp(20)
+        # , temp = desiredTemp
+        return render_template('settings.html', temperature=temp)
     else:
         error = "Please sign in."
     return render_template('onboarding.html', error=error)
@@ -289,11 +290,11 @@ schedule.run_pending()
 
 if __name__ == '__main__':
     schedule.every(15).minutes.do(writeToDb)
-    schedule.every(0.5).minutes.do(getValue)
+    schedule.every(15).minutes.do(getValue)
     schedule.every(24).hours.do(emptyDb)
     t = Thread(target=run_schedule)
     t.start()
     GPIO.add_event_detect(knopBinnen, GPIO.FALLING, callback=openClose,bouncetime=300)
     GPIO.add_event_detect(knopBuiten, GPIO.FALLING, callback=openClose,bouncetime=300)
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', debug=True)

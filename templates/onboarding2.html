@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Parameters</h1>
-
+    <div id="parameters">
+        <h1>Parameters</h1>
         <form action="{{ url_for('index_afterO') }}" method="POST">
             <div>
                 <input type="text" name="temp" placeholder="Desired temperature" required autofocus>
@@ -17,10 +17,9 @@
                 <input type="text" name="hum" placeholder="Desired humidity" required>
             </div>
             <div>
-                <input type="submit" value="Done">
+                <input id="next" type="submit" value="Done">
             </div>
         </form>
-
-
+    </div>
 
 {% endblock %}

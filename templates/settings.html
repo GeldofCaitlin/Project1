@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}
-    iGreenhouse - Instellingen
+    iGreenhouse - Settings
 {% endblock %}
 
 {% block instellingen %}
@@ -27,7 +27,7 @@
             </select>
         </div>
 
-        <input type="submit" value="Next">
+        <input id="button" type="submit" value="Next">
     </form>
 
     <h2>Parameters</h2>
@@ -39,9 +39,12 @@
                 <input type="text" name="hum" placeholder="Desired humidity" required>
             </div>
             <div>
-                <input type="submit" value="Done">
+                <input id="button" type="submit" value="Done">
             </div>
      </form>
+
+    <p>The desired temperature = °C</p>
+    {{ temperature }}
 
 
 {% endblock %}
