@@ -243,6 +243,7 @@ section {
     vertical-align: middle;
 	margin: 80px 80px 20px 80px;
 	box-shadow: 2px 2px 4px #000000;
+	opacity: 100;
 }
 
 .circle:hover{
@@ -250,15 +251,15 @@ section {
 }
 
 .circles{
-	/*background-color: blue;*/
+	/*background-color: blue;
 	background: url("../images/DSC_0176.JPG") ;
-	/*background-size: 100% auto;*/
+	background-size: 100% auto;
 	background-repeat: no-repeat;
-	-webkit-background-origin: border-box;
-	background-size: cover;
-	opacity: 0.5;
+	-webkit-background-origin: border-box;*/
+	/*background-size: cover;*/
     height: 100%;
     width: 100%;
+
     /*position: absolute;*/
     text-align: center;
 	display: flex;
@@ -276,7 +277,14 @@ section {
 	background-size: 200px;
     background-repeat: no-repeat;
     height: 150%;*/
+	background: url("../images/DSC_0176.JPG") ;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	-webkit-background-origin: border-box;
+		opacity: 0.5;
+
     width: 100%;
+	height: 600px;
 	padding-bottom: 80px;
 }
 

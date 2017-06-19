@@ -56,10 +56,6 @@ servoRaam2 = GPIO.PWM(12, 50)
 def getValue():
     global condition, servoDeur, servoRaam, servoRaam2
 
-    # servoRaam.start(2.5)
-    # servoDeur.star(2.5)
-    # servoRaam.start(2.5)
-
     temperature = sensor.print_temp()
     set_temp = 26
 
@@ -135,8 +131,6 @@ def openClose(number):
             servoDeur.ChangeDutyCycle(6)
             time.sleep(3)
             servoDeur.stop()
-    # time.sleep(3)
-    # servoDeur.stop()
     time.sleep(0.0025)
 
 
@@ -147,20 +141,14 @@ def openClose(number):
             print("Gedrukt Buiten ")
             condition = "opened"
             connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door opened manually")
-            standBuiten = 1
-            servoDeur.ChangeDutyCycle(6)  # turn towards 90 degree
-            # time.sleep(2)
-            # servoDeur.stop()
+            servoDeur.ChangeDutyCycle(6)
         else:
             servoDeur.ChangeFrequency(50)
             servoDeur.start(0)
             print("Gedrukt Buiten 2")
             condition = "opened"
             connection.setDataToDatabaseMetingenMetVerandering(sensor.print_temp(), "temperature", "Door closed manually")
-            standBuiten = 0
             servoDeur.ChangeDutyCycle(2.5)  # turn towards 180 degree
-            # time.sleep(2)
-            # servoDeur.stop()
     time.sleep(3)
     servoDeur.stop()
     time.sleep(0.0025)
@@ -207,8 +195,6 @@ def index():
             temp = sensor.print_temp()
             humi = float(sensor.getAdc(0))
             loggedIn = True
-            # temp = 22
-            # humi = 56
             return render_template('index.html', temperature=temp, humidity=humi, condition=condition)
     return render_template('onboarding.html', error=error)
 
@@ -223,23 +209,22 @@ def onboarding2():
 
 
 @app.route('/index', methods=['post'])
-def index_afterO():
-    global loggedIn
+def onboardingDone():
+    global loggedIn, condition
+    # temp_ = sensor.print_temp()
+    # humi = float(sensor.getAdc(0))
     if request.method == 'POST':
         temp = request.form['temp']
         hum = request.form['hum']
-        # if request.method == 'POST':
-        # temp = 15
-        # hum = 55
         connection.insertConfig(hum, temp)
-        temp_ = sensor.print_temp()
-        humi = float(sensor.getAdc(0))
-        loggedIn = True
-        # temp_ = 22
-        # humi = 56
-        return render_template('index.html', temperature=temp_, humidity=humi, condition=condition)
-    # return render_template('index.html')
 
+        temp_ = sensor.print_temp()
+        humi_ = float(sensor.getAdc(0))
+        loggedIn = True
+        return render_template('index.html', temperature=temp_, humidity=humi_, condition=condition)
+    else:
+        error=""
+    return render_template('onboarding.html', error=error)
 
 @app.route('/index')
 def index_loggedIn():
@@ -274,13 +259,12 @@ def report():
 @app.route('/settings')
 def settings():
     global loggedIn
-    temp = 26
-    # desiredTemp = connection.getDesiredTemp(20)
+    temp = connection.getDesiredTemp(20)
+    hum = connection.getDesiredHum(20)
 
     if loggedIn == True:
-        # desiredTemp = connection.getDesiredTemp(20)
-        # , temp = desiredTemp
-        return render_template('settings.html', temperature=temp)
+
+        return render_template('settings.html', temperature=temp, humidity=hum)
     else:
         error = "Please sign in."
     return render_template('onboarding.html', error=error)
@@ -297,4 +281,4 @@ if __name__ == '__main__':
     GPIO.add_event_detect(knopBinnen, GPIO.FALLING, callback=openClose,bouncetime=300)
     GPIO.add_event_detect(knopBuiten, GPIO.FALLING, callback=openClose,bouncetime=300)
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=False)

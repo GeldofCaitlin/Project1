@@ -9,13 +9,16 @@
 
 {% block body %}
     <div class="bodyIndex">
+    <div class="bg"></div>
         <div class="circles">
                 <div>
         {#            <div class="circle">{{ temperature }} °C </div>#}
-
+                    <div>
                     <a {% block report %} {% endblock %} href="{{ url_for('report') }}"><div class="circle">{{ temperature }} °C </div></a>
+                    </div>
                     <h2>Temperature</h2>
                 </div>
+
 
                 <div>
         {#            <div class="circle">{{ humidity }} %</div>#}

@@ -9,6 +9,9 @@
 {% block body %}
     <h1>Settings</h1>
 
+        <p>The desired temperature = {{ temperature }}°C</p>
+        <p>The desired humidity = {{ humidity }}%</p>
+
     <h2>Preferences</h2>
     <form action="{{ url_for('onboarding2') }}" method="POST">
         <div>
@@ -31,7 +34,7 @@
     </form>
 
     <h2>Parameters</h2>
-     <form action="{{ url_for('index_afterO') }}" method="POST">
+     <form action="{{ url_for('onboardingDone') }}" method="POST">
             <div>
                 <input type="text" name="temp" placeholder="Desired temperature" required autofocus>
             </div>
@@ -42,9 +45,5 @@
                 <input id="button" type="submit" value="Done">
             </div>
      </form>
-
-    <p>The desired temperature = °C</p>
-    {{ temperature }}
-
 
 {% endblock %}

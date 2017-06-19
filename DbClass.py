@@ -101,12 +101,20 @@ class DbClass:
         self.__cursor.execute(sqlCommand)
         self.__connection.commit()
 
-    # def getDesiredTemp(self, id):
-    #     self.__cursor = self.__connection.cursor()
-    #     sqlQuery = "SELECT Temperature FROM ConfiguratieId WHERE GebruikerId = '{param1}'"
-    #     sqlCommand = sqlQuery.format(param1=id)
-    #
-    #     self.__cursor.execute(sqlCommand)
-    #     self.__connection.commit()
+    def getDesiredTemp(self, id):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "SELECT Temperature FROM ConfiguratieId WHERE GebruikerId = '{param1}'"
+        sqlCommand = sqlQuery.format(param1=id)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
+
+    def getDesiredHum(self, id):
+        self.__cursor = self.__connection.cursor()
+        sqlQuery = "SELECT Humidity FROM ConfiguratieId WHERE GebruikerId = '{param1}'"
+        sqlCommand = sqlQuery.format(param1=id)
+
+        self.__cursor.execute(sqlCommand)
+        self.__connection.commit()
 
 
